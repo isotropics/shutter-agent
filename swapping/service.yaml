@@ -1,0 +1,167 @@
+name: swapping
+author: isotrop
+version: 0.1.0
+description: A set of agents placing bets
+aea_version: '>=1.0.0, <2.0.0'
+license: Apache-2.0
+fingerprint:
+  README.md: bafybeifxoyvybijxyc3ifplzqthsd7fvozxvcd2kmfkxqf7gmcgt7olzza
+fingerprint_ignore_patterns: []
+agent: isotrop/isotrop_agent:0.1.0:bafybeiagbc5q3w7mx4t6ibhcnm2slx5v4brsya6jnihapa2hbveeimt6xm
+number_of_agents: 1
+deployment:
+  agent:
+    ports:
+      0:
+        8000: 8000
+---
+public_id: isotrop/swapping_chained_abci:0.1.0
+type: skill
+extra:
+  params_args:
+    args:
+      setup:
+        safe_contract_address: ${SAFE_CONTRACT_ADDRESS:str:0x0000000000000000000000000000000000000000}
+        all_participants: ${ALL_PARTICIPANTS:list:[]}
+        consensus_threshold: null
+      genesis_config:
+        genesis_time: '2022-09-26T00:00:00.000000000Z'
+        chain_id: chain-c4daS1
+        consensus_params:
+          block:
+            max_bytes: '22020096'
+            max_gas: '-1'
+            time_iota_ms: '1000'
+          evidence:
+            max_age_num_blocks: '100000'
+            max_age_duration: '172800000000000'
+            max_bytes: '1048576'
+          validator:
+            pub_key_types:
+            - ed25519
+          version: {}
+        voting_power: '10'
+0:
+  models:
+    benchmark_tool:
+      args:
+        log_dir: ${LOG_DIR:str:/logs}
+    params:
+      args:
+        cleanup_history_depth: 1
+        cleanup_history_depth_current: null
+        drand_public_key: 868f005eb8e6e4ca0a47c8a77ceaa5309a47978a7c71bc5cce96366b5d7a569937c529eeda66c7293784a9402801af31
+        genesis_config:
+          genesis_time: '2022-09-26T00:00:00.000000000Z'
+          chain_id: chain-c4daS1
+          consensus_params:
+            block:
+              max_bytes: '22020096'
+              max_gas: '-1'
+              time_iota_ms: '1000'
+            evidence:
+              max_age_num_blocks: '100000'
+              max_age_duration: '172800000000000'
+              max_bytes: '1048576'
+            validator:
+              pub_key_types:
+              - ed25519
+            version: {}
+          voting_power: '10'
+        keeper_timeout: 30.0
+        max_attempts: 10
+        max_healthcheck: 120
+        multisend_address: ${str:0x0000000000000000000000000000000000000000}
+        termination_sleep: ${int:900}
+        init_fallback_gas: 0
+        keeper_allowed_retries: 3
+        reset_pause_duration: ${int:10}
+        on_chain_service_id: ${int:null}
+        reset_tendermint_after: ${int:10}
+        retry_attempts: 400
+        retry_timeout: 3
+        request_retry_delay: 1.0
+        request_timeout: 10.0
+        round_timeout_seconds: 30.0
+        service_id: swapping
+        service_registry_address: ${str:null}
+        setup:
+          all_participants: ${list:["0x263e2BB1Fb4103c29e22D7315CDB1d420B5637F6"]}
+          safe_contract_address: ${str:0xf4c70E42322Cfe61f95DFBa036BB503DBf78Ae38}
+          consensus_threshold: ${int:null}
+        share_tm_config_on_startup: ${bool:false}
+        sleep_time: 1
+        tendermint_check_sleep_delay: 3
+        tendermint_com_url: ${str:http://localhost:8080}
+        tendermint_max_retries: 5
+        tendermint_url: ${str:http://localhost:26657}
+        tendermint_p2p_url: ${str:localhost:26656}
+        use_termination: ${bool:false}
+        tx_timeout: 10.0
+        validate_timeout: 1205
+        finalize_timeout: 60.0
+        history_check_timeout: 1205
+        use_slashing: ${bool:false}
+        slash_cooldown_hours: ${int:3}
+        slash_threshold_amount: ${int:10000000000000000}
+        light_slash_unit_amount: ${int:5000000000000000}
+        serious_slash_unit_amount: ${int:8000000000000000}
+        multisend_batch_size: ${int:50}
+        ipfs_address: ${str:https://gateway.autonolas.tech/ipfs/}
+        coingecko_price_template: ${str:https://api.coingecko.com/api/v3/simple/price?ids=autonolas&vs_currencies=usd&x_cg_demo_api_key={api_key}}
+        coingecko_api_key: ${str:null}
+        uni_router_address: ${str:0x1C232F01118CB8B424793ae03F870aa7D0ac7f77}
+        target_tokens: ${str:wxdai:0xe91d153e0b41518a2ce8dd3d7944fa863463a97d,weth:0x6a023ccd1ff6f2045c3309768ead9e68f978f6e1,wusdc:0x6a023ccd1ff6f2045c3309768ead9e68f978f6e1,link:0x514910771af9ca656af840dff83e8264ecf986ca,uni:0xd533a949740bb3306d119cc777fa900ba034cd52,crv:0x2260fac5e5542a773aa44fbcfedf7c193bc2c599,wbtc:0x8e5bbbb09ed1ebde8674cda39a0c169401db4252,grt:0x7bea4af5d425f2d4485bdad1859c88617df31a67}
+        token_address: ${str:0xcE11e14225575945b8E6Dc0D4F2dD4C570f79d9f}
+        default_chain_id: ${str:gnosis}
+        termination_from_block: ${int:34088325}
+        rebalancing:
+          chain: gnosis
+          token_base_address: '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d'
+          token_base_ticker: WXDAI
+          token_a_address: '0x6a023ccd1ff6f2045c3309768ead9e68f978f6e1'
+          token_a_ticker: WETH
+          token_b_address: '0x6a023ccd1ff6f2045c3309768ead9e68f978f6e1'
+          token_b_ticker: WUSDC
+          token_c_address: '0x514910771af9ca656af840dff83e8264ecf986ca'
+          token_c_ticker: LINK
+          token_d_address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
+          token_d_ticker: UNI
+          token_e_address: '0xd533a949740bb3306d119cc777fa900ba034cd52'
+          token_e_ticker: CRV
+          token_f_address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+          token_f_ticker: WBTC
+          token_g_address: '0xc944e90c64b2c07662a292be6244bdf05cda44a7'
+          token_g_ticker: GRT
+          lp_token_address: '0x7bea4af5d425f2d4485bdad1859c88617df31a67'
+          default_minter: '0x0000000000000000000000000000000000000000'
+          ab_pool_address: '0x86A6C37D3E868580a65C723AAd7E0a945E170416'
+          max_allowance: 1.0e+18
+          default_max_allowance: 2000000000000000000
+          deadline: 300
+          sleep_seconds: 1
+---
+public_id: valory/ledger:0.19.0
+type: connection
+config:
+  ledger_apis:
+    gnosis:
+      address: ${GNOSIS_LEDGER_RPC:str:http://host.docker.internal:8545}
+      chain_id: ${GNOSIS_LEDGER_CHAIN_ID:int:42220}
+      poa_chain: ${GNOSIS_LEDGER_IS_POA_CHAIN:bool:false}
+      default_gas_price_strategy: ${GNOSIS_LEDGER_PRICING:str:eip1559}
+---
+public_id: valory/p2p_libp2p_client:0.1.0
+type: connection
+config:
+  nodes:
+  - uri: ${ACN_URI:str:acn.staging.autonolas.tech:9005}
+    public_key: ${ACN_NODE_PUBLIC_KEY:str:02d3a830c9d6ea1ae91936951430dee11f4662f33118b02190693be835359a9d77}
+cert_requests:
+- identifier: acn
+  ledger_id: ethereum
+  message_format: '{public_key}'
+  not_after: '2023-01-01'
+  not_before: '2022-01-01'
+  public_key: ${ACN_NODE_PUBLIC_KEY:str:02d3a830c9d6ea1ae91936951430dee11f4662f33118b02190693be835359a9d77}
+  save_path: .certs/acn_cosmos_11000.txt
