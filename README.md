@@ -38,7 +38,7 @@
 2. Create the virtual environment:
 
     ```
-    cd shutter-swapping
+    cd shutter-agent
     poetry shell
     poetry install
     ```
@@ -51,10 +51,10 @@
 
 ### Prepare the data
 
-1. Prepare a `keys.json` file containing wallet address and the private key for each of the four agents.
+1. Prepare a `keys.json` file containing wallet address and the private key for each of the  agents.
 
     ```
-    autonomy generate-key ethereum -n 4
+    autonomy generate-key ethereum -n 1
     ```
 
 2. Prepare a `ethereum_private_key.txt` file containing one of the private keys from `keys.json`. Ensure that there is no newline at the end.
