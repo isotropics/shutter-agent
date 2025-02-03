@@ -32,7 +32,7 @@
 1. Clone this repo:
 
     ```
-    
+    https://github.com/isotropics/shutter-agent.git
     ```
 
 2. Create the virtual environment:

@@ -3,9 +3,9 @@
 REPO_PATH=$PWD
 
 # Remove previous service build
-if test -d swapping; then
+if test -d swapping_service; then
   echo "Removing previous service build (needs sudo permission)"
-  sudo rm -r swapping
+  sudo rm -r swapping_service
 fi
 
 # Push packages and fetch service
@@ -13,7 +13,7 @@ make clean
 
 autonomy push-all
 
-autonomy fetch --local --service isotrop/swapping && cd swapping
+autonomy fetch --local --service isotrop/swapping_service && cd swapping_service
 
 # Build the image
 autonomy init --reset --author author --remote --ipfs --ipfs-node "/dns/registry.autonolas.tech/tcp/443/https"
