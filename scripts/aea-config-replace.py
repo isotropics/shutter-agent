@@ -31,7 +31,7 @@ def main() -> None:
     """Main"""
     load_dotenv()
 
-    with open(Path("isotrop_agent", "aea-config.yaml"), "r", encoding="utf-8") as file:
+    with open(Path("swapping_agent", "aea-config.yaml"), "r", encoding="utf-8") as file:
         config = list(yaml.safe_load_all(file))
 
         # Ledger RPCs
@@ -71,7 +71,7 @@ def main() -> None:
                 "safe_contract_address"
             ] = f"${{str:{os.getenv('SAFE_CONTRACT_ADDRESS')}}}"  # type: ignore
 
-    with open(Path("isotrop_agent", "aea-config.yaml"), "w", encoding="utf-8") as file:
+    with open(Path("swapping_agent", "aea-config.yaml"), "w", encoding="utf-8") as file:
         yaml.dump_all(config, file, sort_keys=False)
 
 

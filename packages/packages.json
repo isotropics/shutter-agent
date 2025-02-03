@@ -5,8 +5,8 @@
         "contract/valory/uniswapv2pair/0.1.0": "bafybeihuc7ltsniqq7vrpwpzd6n5ilvhbkqwdnzk4aewr7ahr25ghl6dku",
         "skill/isotrop/swapping_abci/0.1.0": "bafybeife46vfbz3msp33yk42wo53zqip3phcwnkhaxntn5q77z56jo5nay",
         "skill/isotrop/swapping_chained_abci/0.1.0": "bafybeibgpdrh7nwajndo5ftmc7bbu2dopidwzl5uyhh2avqvsdhn7mm6tq",
-        "agent/isotrop/isotrop_agent/0.1.0": "bafybeicnhtrwd36dtihp3mu52bc346zuyumrfkgypc5lwwwkjtwoxk2fcm",
-        "service/isotrop/swapping/0.1.0": "bafybeifg6txpsxgp5oxvxmw7y3avnakrr6mnxhkro5bzrrhk2tww2sussm"
+        "agent/isotrop/swapping_agent/0.1.0": "bafybeifxtb2t4gyftloutmyh5uoig3bmwwe5obnb4rkshlk5rk42w25g3y",
+        "service/isotrop/swapping/0.1.0": "bafybeigxqiydoa5t7xwxdg2zvbdl3wwbq6byvd4fxgc5hwkukdjzyydsc4"
     },
     "third_party": {
         "protocol/open_aea/signing/1.0.0": "bafybeihv62fim3wl2bayavfcg3u5e5cxu3b7brtu4cn5xoxd6lqwachasi",
