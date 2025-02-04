@@ -11,9 +11,9 @@ cleanup() {
 trap cleanup EXIT
 
 # Remove previous agent if exists
-if test -d isotrop_agent; then
+if test -d swapping_agent; then
   echo "Removing previous agent build"
-  rm -r isotrop_agent
+  rm -r swapping_agent
 fi
 
 # Remove empty directories to avoid wrong hashes
@@ -29,14 +29,14 @@ autonomy packages sync --source valory-xyz/open-aea:$AEA_VERSION --source valory
 autonomy packages lock
 
 # Fetch the agent
-autonomy fetch --local --agent isotrop/isotrop_agent
+autonomy fetch --local --agent isotrop/swapping_agent
 
 # Replace params with env vars
 source .env
 python scripts/aea-config-replace.py
 
 # Copy and add the keys and issue certificates
-cd isotrop_agent
+cd swapping_agent
 cp $PWD/../ethereum_private_key.txt .
 autonomy add-key ethereum ethereum_private_key.txt
 autonomy issue-certificates

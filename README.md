@@ -32,7 +32,7 @@
 1. Clone this repo:
 
     ```
-    
+    https://github.com/isotropics/shutter-agent.git
     ```
 
 2. Create the virtual environment:
@@ -82,7 +82,16 @@
     - SUBGRAPH_URL: The Graph subgraph URL for fetching relevant data.
     - MULTI_SEND_CONTRACT_TOKEN_ADDRESS: The address of the multi-send contract token.
     - TRANSFER_CONTRACT_TOKEN_ADDRESS: The address of the transfer contract token.
-    - TOKEN_ADDRESS: The address of the token to be used.
+    - TOKEN_ADDRESS: The address of the token to be used.(
+        wxdai:0xe91d153e0b41518a2ce8dd3d7944fa863463a97d,
+        weth:0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1,
+        usdc:0xddafbb505ad214d7b80b1f830fccc89b60fb7a83,
+        link:0xe2e73a1c69ecf83f464efce6a5be353a37ca09b2,
+        uni:0x4537e328bf7e4efa29d05caea260d7fe26af9d74,
+        crv:0x712b3d230F3C1c19db860d80619288b1F0BDd0Bd,
+        wbtc:0x8e5bBbb09Ed1ebdE8674Cda39A0c169401db4252,
+        grt:0xFAdc59D012Ba3c110B08A15B7755A5cb7Cbe77D7
+        )
     - TARGET_TOKENS: A list of tokens you want to target for transaction
 
 ### Run a single agent
