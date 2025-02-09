@@ -14,7 +14,7 @@ The following table shows which versions of `shutter-swapping-agent` are current
 
 The `shutter-swapping-agent` team and community take all security bugs in `shutter-swapping-agent` seriously. Thank you for improving the security of `shutter-swapping-agent`. We appreciate your efforts and responsible disclosure and will make every effort to acknowledge your contributions.
 
-Report security bugs by emailing `info@valory.xyz`.
+Report security bugs by emailing `info@isotrop.com`.
 
 The lead maintainer will acknowledge your email within 48 hours, and will send a more detailed response within 48 hours indicating the next steps in handling your report. After the initial reply to your report, the security team will endeavour to keep you informed of the progress towards a fix and full announcement, and may ask for additional information or guidance.
 
