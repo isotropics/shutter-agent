@@ -14,6 +14,27 @@
 - Smart Contract Interaction: Interacts with ERC20 tokens, Uniswap router, and multisend contracts.
 - Safe Transaction Hashing: Generates a unique transaction hash for multisend operations.
 
+## Workflow Overview
+1. Strategy Evaluation (StrategyEvaluationRound):
+
+    - This round involves evaluating a strategy, determining whether to perform a swap or swap-back based on the analysis of token amounts.
+    - Once strategy evaluation is done, it either transitions to the APICheckRound (via Event.DONE_ENTER) or ends (Event.DONE), leading to the next round.
+2. API Check (APICheckRound):
+
+    - In this round, the system interacts with APIs (likely external smart contracts or data providers) to fetch prices, balances, or other relevant information.
+    - Based on the results, the system will transition to the DecisionMakingRound (Event.DONE).
+3. Decision Making (DecisionMakingRound):
+
+    - After the API check, the system evaluates whether it should perform a transaction based on predefined conditions, such as the ratio of token amounts.
+    - If conditions are met, it triggers the TRANSACT event and moves to the TxPreparationRound.
+    - If the event is DONE or ERROR, it concludes the round.
+4. Transaction Preparation (TxPreparationRound):
+
+    - In this round, the system prepares the transactions based on the strategy and decisions made earlier (including swap transactions, approval transactions, etc.).
+    - Once the transactions are prepared, the round concludes (Event.DONE).
+5. Finished States:
+
+    - If any of the rounds reach their conclusion (i.e., FinishedStrategyEvaluationRound, FinishedDecisionMakingRound, FinishedTxPreparationRound), the app is considered to have completed its operation, and no further transitions occur.
 ## System requirements
 
 - Python `>=3.10`

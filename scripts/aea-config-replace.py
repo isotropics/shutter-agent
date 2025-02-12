@@ -71,6 +71,11 @@ def main() -> None:
                 "safe_contract_address"
             ] = f"${{str:{os.getenv('SAFE_CONTRACT_ADDRESS')}}}"  # type: ignore
 
+        if os.getenv("DEFAULT_XDAI_VAL"):
+            config[-1]["models"]["params"]["args"][
+                "default_xdai_val"
+            ] = f"${{int:{os.getenv('DEFAULT_XDAI_VAL')}}}"
+
     with open(Path("swapping_agent", "aea-config.yaml"), "w", encoding="utf-8") as file:
         yaml.dump_all(config, file, sort_keys=False)
 

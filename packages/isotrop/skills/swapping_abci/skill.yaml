@@ -7,11 +7,11 @@ license: Apache-2.0
 aea_version: '>=1.0.0, <2.0.0'
 fingerprint:
   __init__.py: bafybeib6yvldhezzkochlan6jskgiks3uxxffo36qs7nsg4ya2tj7bvca4
-  behaviours.py: bafybeibcr3m42xz5x4wlvugkwxjgxemn2ybwjl45lqd53gxgheiesq7uq4
+  behaviours.py: bafybeiaszdcv3qhreff6733rufjsjx6bbm6qrokltfyvxm3ttyirphrpue
   dialogues.py: bafybeihmfu7xht6kjfbq2szvx74qzqync4d2iwdh274yjgxcrasol6xxmq
   fsm_specification.yaml: bafybeigmisthiq4tjz4fg6dsd2yag7kszyf5craq5scadtpvrvrpvzbbfe
   handlers.py: bafybeibpvufjg4vaxwhx2fqabg3itbxucqcttxesyvw37ccv6yvbu2ctnm
-  models.py: bafybeicefat7ihblqa5gjj56yn5ugrnzp733woi4xpbifyzpybnja4alj4
+  models.py: bafybeihnkqxoqs5tgs722c27emrvsr73ogf4luks5gwh4okq5tuegjtaai
   payloads.py: bafybeieetci425zca6iq2quld5zklr2pljlee52auamadcp7jcutvvjggq
   rounds.py: bafybeifaqrixwvyuwwo26oa5ii7nrqekfloamaxneq6hnpduyolwc5yimq
 fingerprint_ignore_patterns: []
@@ -137,6 +137,7 @@ models:
       multi_send_contract_token_address: ${str:0x0000000000000000000000000000000000000000}
       transfer_contract_token_address: ${str:0x0000000000000000000000000000000000000000}
       subgraph_url: ${str:https://gateway.thegraph.com/api/{api_key}/subgraphs/id/6oJrPk9YJEU9rWU4DAizjZdALSccxe5ZahBsTtFaGksU}
+      default_xdai_val: 800
     class_name: Params
   requests:
     args: {}
