@@ -22,7 +22,7 @@ skills:
 - valory/registration_abci:0.1.0:bafybeicnth5q4httefsusywx3zrrq4al47owvge72dqf2fziruicq6hqta
 - valory/reset_pause_abci:0.1.0:bafybeievjciqdvxhqxfjd4whqs27h6qbxqzrae7wwj7fpvxlvmtw3x35im
 - valory/termination_abci:0.1.0:bafybeid54buqxipiuduw7b6nnliiwsxajnltseuroad53wukfonpxca2om
-- isotrop/swapping_abci:0.1.0:bafybeife46vfbz3msp33yk42wo53zqip3phcwnkhaxntn5q77z56jo5nay
+- isotrop/swapping_abci:0.1.0:bafybeibk4x5jjj63wddskf7z62xaxrbdoop4mynmqlbnyvgccbfqhcsvki
 - valory/transaction_settlement_abci:0.1.0:bafybeihq2yenstblmaadzcjousowj5kfn5l7ns5pxweq2gcrsczfyq5wzm
 behaviours:
   main:
@@ -144,6 +144,7 @@ models:
       transfer_contract_token_address: ${str:0x0000000000000000000000000000000000000000}
       subgraph_url: ${str:https://gateway.thegraph.com/api/{api_key}/subgraphs/id/6oJrPk9YJEU9rWU4DAizjZdALSccxe5ZahBsTtFaGksU}
       default_chain_id: gnosis
+      default_xdai_val: 800
       rebalancing:
         chain: gnosis
         token_base_address: '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d'

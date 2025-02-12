@@ -26,8 +26,8 @@ protocols:
 skills:
 - valory/abstract_abci:0.1.0:bafybeihu2bcgjk2tqjiq2zhk3uogtfszqn4osvdt7ho3fubdpdj4jgdfjm
 - valory/abstract_round_abci:0.1.0:bafybeibovsktd3uxur45nrcomq5shcn46cgxd5idmhxbmjhg32c5abyqim
-- isotrop/swapping_abci:0.1.0:bafybeife46vfbz3msp33yk42wo53zqip3phcwnkhaxntn5q77z56jo5nay
-- isotrop/swapping_chained_abci:0.1.0:bafybeibgpdrh7nwajndo5ftmc7bbu2dopidwzl5uyhh2avqvsdhn7mm6tq
+- isotrop/swapping_abci:0.1.0:bafybeibk4x5jjj63wddskf7z62xaxrbdoop4mynmqlbnyvgccbfqhcsvki
+- isotrop/swapping_chained_abci:0.1.0:bafybeih4q7b6gl6m66dx4g6rgupjndvida2h6xh6y6p7fby5pqkxnhwapu
 - valory/registration_abci:0.1.0:bafybeicnth5q4httefsusywx3zrrq4al47owvge72dqf2fziruicq6hqta
 - valory/reset_pause_abci:0.1.0:bafybeievjciqdvxhqxfjd4whqs27h6qbxqzrae7wwj7fpvxlvmtw3x35im
 - valory/termination_abci:0.1.0:bafybeid54buqxipiuduw7b6nnliiwsxajnltseuroad53wukfonpxca2om
@@ -183,6 +183,7 @@ models:
       token_address: ${str:0xcE11e14225575945b8E6Dc0D4F2dD4C570f79d9f}
       default_chain_id: ${str:gnosis}
       termination_from_block: ${int:34088325}
+      default_xdai_val: ${int:800}
       rebalancing:
         chain: gnosis
         token_base_address: '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d'

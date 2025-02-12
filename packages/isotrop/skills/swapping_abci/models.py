@@ -66,5 +66,6 @@ class Params(BaseParams):
         assert tokens, "target tokens is not set, this is required to run this agent."
         self.target_tokens = tokens
         self.rebalancing_params = self._ensure("rebalancing", kwargs,dict)
+        self.default_xdai_val: int = self._ensure("default_xdai_val", kwargs, int)
 
         super().__init__(*args, **kwargs)

@@ -88,7 +88,6 @@ SAFE_TX_GAS_ENTER = 0
 SAFE_TX_GAS_EXIT = 0
 SAFE_TX_GAS_SWAP_BACK = 0
 WXDAI = "0xe91d153e0b41518a2ce8dd3d7944fa863463a97d"
-DEFAULT_XDAI_VAL = 800
 
 class SwappingBaseBehaviour(BaseBehaviour, ABC):  # pylint: disable=too-many-ancestors
     """Base behaviour for the swapping_abci skill."""
@@ -132,35 +131,6 @@ class SwappingBaseBehaviour(BaseBehaviour, ABC):  # pylint: disable=too-many-anc
 
         self.context.logger.info(f"Token balance is {token_balance}")
         return token_balance, wallet_balance
-
-
-def parse_tx_token_balance(
-    transfer_logs: List[Dict],
-    token_address: str,
-    source_address: str,
-    destination_address: str,
-) -> int:
-    """
-    Returns the transferred token amount from one address to another given a list of transactions.
-
-    :param transfer_logs: a list of transactions.
-    :param token_address: the token address.
-    :param source_address: the source address.
-    :param destination_address: the destination address.
-    :return: the transferred amount
-    """
-
-    # Filter the events based on token address, source, and destination addresses
-    token_events = list(
-        filter(
-            lambda log: log["token_address"] == token_address
-            and log["from"] == source_address
-            and log["to"] == destination_address,
-            transfer_logs,
-        )
-    )
-    # Sum the 'value' field for each event
-    return sum(event["value"] for event in token_events)
 
 class StrategyEvaluationBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-many-ancestors
     """StrategyEvaluationBehaviour"""
@@ -292,35 +262,6 @@ class APICheckBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-many-ance
 
         self.set_done()
 
-    def get_tx_result(self) -> Generator[None, None, List[Dict]]:
-        """Transaction transfer result."""
-        strategy = json.loads(self.synchronized_data.most_voted_strategy)
-        contract_api_msg = yield from self.get_contract_api_response(
-            performative=ContractApiMessage.Performative.GET_STATE,  # type: ignore
-            contract_address=strategy["token_LP"]["address"],
-            contract_id=str(UniswapV2Pair.contract_id),
-            contract_callable="get_transaction_transfer_logs",
-            tx_hash=self.synchronized_data.final_tx_hash,
-            target_address=self.synchronized_data.safe_contract_address,
-            chain_id=GNOSIS_CHAIN_ID,
-        )
-        self.context.logger.info(f"Error retrieving the transaction logs for hash contract_api_msg: {contract_api_msg}")
-        
-        if contract_api_msg.performative != ContractApiMessage.Performative.STATE:
-            self.context.logger.info(
-                f"Error retrieving the transaction logs for hash: {self.synchronized_data.final_tx_hash}"
-            )
-            return []  # pragma: nocover
-        
-        transfers = cast(list, contract_api_msg.state.body["logs"])
-
-        transfer_log_message = (
-            f"The tx with hash {self.synchronized_data.final_tx_hash} ended with the following transfers.\n"
-            f"Transfers: {str(transfers)}\n"
-        )
-        self.context.logger.info(f"Error retrieving the transaction logs for hash: {transfer_log_message}")
-        return transfers
-
     def get_eq_prices(self, strategy: dict) -> Generator[None, None, tuple[list[float], list[int]]]:
         is_swap_back = False
         if strategy["action"] == StrategyType.SWAP_BACK.value:
@@ -389,62 +330,6 @@ class APICheckBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-many-ance
         price2 = float(amounts[1] / amounts[0])
         return [price1, price2], amounts
 
-    def get_prices(self) -> Generator[None, None, tuple[list[float], list[int]]]:
-        target_tokens = self.params.target_tokens
-        assert len(target_tokens) == 3, "Invalid target tokens value, expecting 3 items."
-        self.context.logger.info(f"get_prices {target_tokens}    {debug_str}")
-        token1, token2, token3 = target_tokens
-        amount_in = 2 * 1000000000000000000
-        price_results = yield from self._get_amounts_and_prices(token1[1], token2[1], token3[1], amount_in)
-        self.context.logger.info(f"get_prices results {type(price_results)}, {price_results}    {debug_str}")
-        prices, amounts_out = price_results
-        if not amounts_out or len(amounts_out) < 4 or not prices:
-            return prices, amounts_out
-
-        token0_amount, token2_amount, token3_amount, token1_amount = amounts_out
-        price1, price2, price3 = prices
-        return [price1, price2, price3], [amount_in, token2_amount, token3_amount, token1_amount]
-
-    def _get_amounts_and_prices(self, token1: str, token2: str, token3: str, amount_in: int):
-        self.context.logger.info(f"get_amounts_and_prices    {debug_str}")
-        response = yield from self.get_contract_api_response(
-            performative=ContractApiMessage.Performative.GET_STATE,  # type: ignore
-            contract_id=str(UniswapV2Router02.contract_id),
-            contract_callable="get_amounts_out",
-            contract_address=self.params.uni_router_address,
-            amount_in=amount_in,
-            path=[token1, token2, token3, token1],
-            chain_id="gnosis"
-        )
-        
-        if response.performative != ContractApiMessage.Performative.STATE:
-            self.context.logger.error(
-                f"{debug_str} Getting the swap price failed: {response}"
-            )
-            return [], []
-
-        amounts = response.state.body.get("amounts", None)
-        if not amounts:
-            self.context.logger.error(
-                f"{debug_str} Getting amounts out failed: {response}"
-            )
-            return [], []
-        
-        self.context.logger.info(f"amounts out data:    {amounts}")
-        for i, amount in enumerate(amounts):
-            if amount <= 0:
-                self.context.logger.error(
-                    f"{debug_str} found zero amount for token {i+1}: {response}"
-                )
-                return [], []
-
-        self.context.logger.info(f"{debug_str} Amounts out: {amounts}")
-        price1 = float(amounts[0] / amount_in)
-        price2 = float(amounts[1] / amounts[0])
-        price3 = float(amounts[2] / amounts[1])
-        yield from self.get_balance(token1)
-        return [price1, price2, price3], amounts
-    
 class DecisionMakingBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-many-ancestors
     """DecisionMakingBehaviour"""
 
@@ -501,7 +386,6 @@ class TxPreparationBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-many
             dest_token = strategy["token_base"]["address"] if is_swap_back else strategy["token_a"]["address"]
             amount_in = strategy["token_a"]["amount_received"] if is_swap_back else strategy["token_base"]["amount_in_max_a"]
             amount_out_min = strategy["token_base"]["amount_min_after_swap_back_a"] if is_swap_back else strategy["token_a"]["amount_after_swap"]
-
             self.context.logger.info(f"Transaction amount_in: {amount_in}, amount_out_min: {amount_out_min}")
             
             transactions = []
@@ -511,7 +395,7 @@ class TxPreparationBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-many
             xDAI_balance = wallet_balance / 10**18  # Convert to xDAI
             self.context.logger.info(f"xDAI Balance: {xDAI_balance}")
 
-            if xDAI_balance >= DEFAULT_XDAI_VAL:
+            if xDAI_balance >= self.params.default_xdai_val:
                 amount_to_convert = wallet_balance * 0.80
                 self.context.logger.info(f"Amount to convert: {amount_to_convert}")
                 exchange_tx = yield from self._build_exchange_tx(amount_to_convert)
@@ -652,8 +536,7 @@ class TxPreparationBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-many
 
         tx_hash = cast(str, response.state.body["tx_hash"])[2:]
         return tx_hash
-
-
+    
 class SwappingRoundBehaviour(AbstractRoundBehaviour):
     """SwappingRoundBehaviour"""
 
