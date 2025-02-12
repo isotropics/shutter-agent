@@ -122,7 +122,7 @@ class SwappingBaseBehaviour(BaseBehaviour, ABC):  # pylint: disable=too-many-anc
 
         if response_msg.performative != ContractApiMessage.Performative.RAW_TRANSACTION:
             self.context.logger.error(f"Could not calculate the balance of the safe: {response_msg}")
-            return 0, 0
+            return 0,0
 
         self.context.logger.info(f"Token Balance in account {response_msg}")
 
@@ -151,13 +151,14 @@ def parse_tx_token_balance(
     """
 
     # Filter the events based on token address, source, and destination addresses
-    token_events = [
-        log for log in transfer_logs
-        if log["token_address"] == token_address
-        and log["from"] == source_address
-        and log["to"] == destination_address
-    ]
-
+    token_events = list(
+        filter(
+            lambda log: log["token_address"] == token_address
+            and log["from"] == source_address
+            and log["to"] == destination_address,
+            transfer_logs,
+        )
+    )
     # Sum the 'value' field for each event
     return sum(event["value"] for event in token_events)
 
@@ -168,8 +169,7 @@ class StrategyEvaluationBehaviour(SwappingBaseBehaviour):  # pylint: disable=too
 
     def async_act(self) -> Generator:
         """Do the act, supporting asynchronous execution."""
-
-        
+   
         with self.context.benchmark_tool.measure(self.behaviour_id).local():
             sender = self.context.agent_address
             # Get the previous strategy or use the dummy one
@@ -321,7 +321,7 @@ class APICheckBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-many-ance
         self.context.logger.info(f"Error retrieving the transaction logs for hash: {transfer_log_message}")
         return transfers
 
-    def get_eq_prices(self, strategy: dict) -> Generator[None, None, tuple[List[float], List[int]]]:
+    def get_eq_prices(self, strategy: dict) -> Generator[None, None, tuple[list[float], list[int]]]:
         is_swap_back = False
         if strategy["action"] == StrategyType.SWAP_BACK.value:
             is_swap_back = True
@@ -389,7 +389,7 @@ class APICheckBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-many-ance
         price2 = float(amounts[1] / amounts[0])
         return [price1, price2], amounts
 
-    def get_prices(self) -> Generator[None, None, tuple[List[float], List[int]]]:
+    def get_prices(self) -> Generator[None, None, tuple[list[float], list[int]]]:
         target_tokens = self.params.target_tokens
         assert len(target_tokens) == 3, "Invalid target tokens value, expecting 3 items."
         self.context.logger.info(f"get_prices {target_tokens}    {debug_str}")
@@ -472,7 +472,7 @@ class DecisionMakingBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-man
         # Check for specific condition to transition to TRANSACT event
         if len(amounts) == 4 and amounts[0] and amounts[-1] > amounts[0]:
             initial_amount = amounts[0] * 1e-18
-            final_amount = amounts[-1] * 1e-18
+            final_amount = amounts[0] * 1e-18
             ratio = final_amount / initial_amount
             self.context.logger.info(f"DecisionMakingBehaviour get_event  initial_amount={initial_amount}, final_amount={final_amount}, ratio={ratio}    {debug_str}")
 
@@ -481,6 +481,7 @@ class DecisionMakingBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-man
                 event = Event.TRANSACT.value
 
         self.context.logger.info(f"Event is {event}")
+        event = Event.TRANSACT.value
         return str(event)
 
 class TxPreparationBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-many-ancestors
