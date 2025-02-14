@@ -145,7 +145,15 @@ class StrategyEvaluationBehaviour(SwappingBaseBehaviour):  # pylint: disable=too
             # Get the previous strategy or use the dummy one
             strategy: dict = {}
             try:
-                strategy = json.loads(self.synchronized_data.most_voted_strategy)
+                currentPeriod = self.synchronized_data.period_count
+                if currentPeriod != 0 :
+                    previous_round = self.synchronized_data.period_count - 1
+                    previous_strategy_data = self.synchronized_data.db._data[previous_round]["most_voted_strategy"]
+                    if len(previous_strategy_data) > 0:
+                        strategy = json.loads(previous_strategy_data[0])
+                        self.context.logger.info(strategy)
+                else:
+                    strategy = json.loads(self.synchronized_data.most_voted_strategy)
                 self.context.logger.info("Strategy Data found in try")
                 if strategy["action"] == StrategyType.ENTER.value:
                     strategy["action"] = StrategyType.SWAP_BACK.value
@@ -154,7 +162,7 @@ class StrategyEvaluationBehaviour(SwappingBaseBehaviour):  # pylint: disable=too
                     strategy["action"] = StrategyType.ENTER.value
 
             except ValueError:
-                strategy = self.get_dummy_strategy()
+                strategy = self.get_strategy()
                 self.context.logger.info("Strategy Data found in catch block")
 
             if strategy["action"] == StrategyType.WAIT.value:  # pragma: nocover
@@ -194,7 +202,7 @@ class StrategyEvaluationBehaviour(SwappingBaseBehaviour):  # pylint: disable=too
         self.set_done()
 
     
-    def get_dummy_strategy(self) -> dict:
+    def get_strategy(self) -> dict:
         """Get a dummy strategy."""
         last_timestamp = cast(
             SharedState, self.context.state
@@ -266,12 +274,12 @@ class APICheckBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-many-ance
         is_swap_back = False
         if strategy["action"] == StrategyType.SWAP_BACK.value:
             is_swap_back = True
-            self.context.logger.info(f"final_tx_hash: {self.synchronized_data.final_tx_hash}")
             token_a = strategy["token_a"]["address"]
             token_balance, wallet_balance = yield from self.get_balance(token=token_a)
             self.context.logger.info(f"token_a amount_received: {token_balance}")
-            self.context.logger.info(f"wallet balance: {wallet_balance}")
+            self.context.logger.info(f"wallet balance: {wallet_balance} ")
             if token_balance > 0:
+                self.context.logger.info(f"token,wallet balance: {token_balance} {wallet_balance}")
                 strategy["token_a"]["amount_received"] = strategy["token_a"]["amount_after_swap"]
             else:
                 is_swap_back = False
@@ -280,7 +288,7 @@ class APICheckBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-many-ance
         destination_token = strategy["token_base"]["address"] if is_swap_back else strategy["token_a"]["address"]
         amount_in = strategy["token_a"]["amount_received"] if is_swap_back else self.params.rebalancing_params["default_max_allowance"]
 
-        price_results = yield from self._get_amounts_and_prices_v1(source_token, destination_token, amount_in)
+        price_results = yield from self._get_amounts_and_prices(source_token, destination_token, amount_in)
         self.context.logger.info(f"get_prices results {type(price_results)}, {price_results}    {debug_str}")
         prices, amounts_out = price_results
         if not amounts_out or not prices:
@@ -292,7 +300,7 @@ class APICheckBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-many-ance
         else:
             strategy["token_a"]["amount_after_swap"] = destination_token_amount
 
-    def _get_amounts_and_prices_v1(self, source_token: str, destination_token: str, amount_in: int):
+    def _get_amounts_and_prices(self, source_token: str, destination_token: str, amount_in: int):
         self.context.logger.info(f"get_amounts_and_prices    {debug_str}")
         response = yield from self.get_contract_api_response(
             performative=ContractApiMessage.Performative.GET_STATE,  # type: ignore

@@ -7,7 +7,7 @@ license: Apache-2.0
 fingerprint:
   README.md: bafybeifxoyvybijxyc3ifplzqthsd7fvozxvcd2kmfkxqf7gmcgt7olzza
 fingerprint_ignore_patterns: []
-agent: isotrop/swapping_agent:0.1.0:bafybeifxtb2t4gyftloutmyh5uoig3bmwwe5obnb4rkshlk5rk42w25g3y
+agent: isotrop/swapping_agent:0.1.0:bafybeiclxebwshg32u3t2lhyj3hxjinfuyaiyt4fwc4qcnzbsgqufhrn7a
 number_of_agents: 1
 deployment:
   agent:
@@ -90,8 +90,6 @@ extra:
         multisend_batch_size: ${int:50}
         ipfs_address: ${str:https://gateway.autonolas.tech/ipfs/}
         uni_router_address: ${str:0x1C232F01118CB8B424793ae03F870aa7D0ac7f77}
-        target_tokens: ${str:wxdai:0xe91d153e0b41518a2ce8dd3d7944fa863463a97d,weth:0x6a023ccd1ff6f2045c3309768ead9e68f978f6e1,wusdc:0x6a023ccd1ff6f2045c3309768ead9e68f978f6e1,link:0x514910771af9ca656af840dff83e8264ecf986ca,uni:0xd533a949740bb3306d119cc777fa900ba034cd52,crv:0x2260fac5e5542a773aa44fbcfedf7c193bc2c599,wbtc:0x8e5bbbb09ed1ebde8674cda39a0c169401db4252,grt:0x7bea4af5d425f2d4485bdad1859c88617df31a67}
-        token_address: ${str:0xcE11e14225575945b8E6Dc0D4F2dD4C570f79d9f}
         default_chain_id: ${str:gnosis}
         termination_from_block: ${int:34088325}
         rebalancing:
