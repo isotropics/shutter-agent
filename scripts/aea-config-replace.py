@@ -46,21 +46,6 @@ def main() -> None:
                 "uni_router_address"
             ] = f"${{str:{os.getenv('UNI_ROUTER_ADDRESS')}}}"  # type: ignore
 
-        if os.getenv("TOKEN_ADDRESS"):
-            config[-1]["models"]["params"]["args"][
-                "token_address"
-            ] = f"${{str:{os.getenv('TOKEN_ADDRESS')}}}"  # type: ignore
-
-        if os.getenv("TARGET_TOKENS"):
-            config[-1]["models"]["params"]["args"][
-                "target_tokens"
-            ] = f"${{str:{os.getenv('TARGET_TOKENS')}}}"  # type: ignore
-
-        if os.getenv("COINGECKO_API_KEY"):
-            config[-1]["models"]["params"]["args"][
-                "coingecko_api_key"
-            ] = f"${{str:{os.getenv('COINGECKO_API_KEY')}}}"  # type: ignore
-
         if os.getenv("ALL_PARTICIPANTS"):
             config[-1]["models"]["params"]["args"]["setup"][
                 "all_participants"
@@ -71,10 +56,15 @@ def main() -> None:
                 "safe_contract_address"
             ] = f"${{str:{os.getenv('SAFE_CONTRACT_ADDRESS')}}}"  # type: ignore
 
-        if os.getenv("DEFAULT_XDAI_VAL"):
+        if os.getenv("MIN_XDAI_VAL"):
             config[-1]["models"]["params"]["args"][
-                "default_xdai_val"
-            ] = f"${{int:{os.getenv('DEFAULT_XDAI_VAL')}}}"
+                "min_xdai_val"
+            ] = f"${{int:{os.getenv('MIN_XDAI_VAL')}}}"
+        
+        if os.getenv("MIN_XDAI_TRADE"):
+            config[-1]["models"]["params"]["args"]["rebalancing"][
+                "default_max_allowance"
+            ] = f"${{int:{os.getenv('MIN_XDAI_TRADE')}}}"
 
     with open(Path("swapping_agent", "aea-config.yaml"), "w", encoding="utf-8") as file:
         yaml.dump_all(config, file, sort_keys=False)
