@@ -95,14 +95,10 @@
 7. Fill in the required environment variables in .env. The necessary variables include:
     - ALL_PARTICIPANTS: The list of all agent wallet addresses.
     - GNOSIS_LEDGER_RPC: Set this to your Tenderly fork Admin RPC URL.
-    - COINGECKO_API_KEY: Obtain an API key from CoinGecko.
     - SAFE_CONTRACT_ADDRESS: The address of your deployed Gnosis Safe.
     - RESET_PAUSE_DURATION: Set the duration for the reset pause (e.g., 10 seconds).
     - RESET_TENDERMINT_AFTER: Set the duration after which Tendermint should be reset (e.g., 10 seconds).
-    - TRANSFER_TARGET_ADDRESS: The target address for transfers.
-    - SUBGRAPH_URL: The Graph subgraph URL for fetching relevant data.
     - MULTI_SEND_CONTRACT_TOKEN_ADDRESS: The address of the multi-send contract token.
-    - TRANSFER_CONTRACT_TOKEN_ADDRESS: The address of the transfer contract token.
     - TOKEN_ADDRESS: The address of the token to be used.(
         wxdai:0xe91d153e0b41518a2ce8dd3d7944fa863463a97d,
         weth:0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1,
@@ -111,9 +107,9 @@
         uni:0x4537e328bf7e4efa29d05caea260d7fe26af9d74,
         crv:0x712b3d230F3C1c19db860d80619288b1F0BDd0Bd,
         wbtc:0x8e5bBbb09Ed1ebdE8674Cda39A0c169401db4252,
-        grt:0xFAdc59D012Ba3c110B08A15B7755A5cb7Cbe77D7
         )
-    - TARGET_TOKENS: A list of tokens you want to target for transaction
+    - MIN_XDAI_VAL: This is the min XDAI thresh hold amount, if the wallet is  more or equal to this then it will convert to WXDAI for trading.
+    - MIN_XDAI_TRADE: This is the min XDAI amount which we are going to place trade.
 
 ### Run a single agent
 
