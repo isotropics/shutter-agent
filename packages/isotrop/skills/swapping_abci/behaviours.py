@@ -169,7 +169,7 @@ class StrategyEvaluationBehaviour(SwappingBaseBehaviour):  # pylint: disable=too
                 self.context.logger.info("Current strategy is still optimal. Waiting.")
 
             if strategy["action"] == StrategyType.ENTER.value:
-                tokens = ['token_a', 'token_b', 'token_c', 'token_d', 'token_e', 'token_f', 'token_g']
+                tokens = ['token_a', 'token_b', 'token_c', 'token_d', 'token_e', 'token_f']
                 selected_token_key = random.choice(tokens)
                 self.context.state.selected_token_key = selected_token_key
                 # Dynamically set the ticker and address based on selected token

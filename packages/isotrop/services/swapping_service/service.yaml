@@ -109,8 +109,6 @@ extra:
           token_e_ticker: CRV
           token_f_address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
           token_f_ticker: WBTC
-          token_g_address: '0xc944e90c64b2c07662a292be6244bdf05cda44a7'
-          token_g_ticker: GRT
           lp_token_address: '0x7bea4af5d425f2d4485bdad1859c88617df31a67'
           default_minter: '0x0000000000000000000000000000000000000000'
           ab_pool_address: '0x86A6C37D3E868580a65C723AAd7E0a945E170416'

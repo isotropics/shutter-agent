@@ -147,8 +147,6 @@ models:
         token_e_ticker: CRV
         token_f_address: '0x8e5bBbb09Ed1ebdE8674Cda39A0c169401db4252'
         token_f_ticker: WBTC
-        token_g_address: '0xFAdc59D012Ba3c110B08A15B7755A5cb7Cbe77D7'
-        token_g_ticker: GRT
         lp_token_address: '0x7bea4af5d425f2d4485bdad1859c88617df31a67'
         default_minter: '0x0000000000000000000000000000000000000000'
         ab_pool_address: '0x86A6C37D3E868580a65C723AAd7E0a945E170416'

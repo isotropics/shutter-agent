@@ -22,7 +22,7 @@ skills:
 - valory/registration_abci:0.1.0:bafybeicnth5q4httefsusywx3zrrq4al47owvge72dqf2fziruicq6hqta
 - valory/reset_pause_abci:0.1.0:bafybeievjciqdvxhqxfjd4whqs27h6qbxqzrae7wwj7fpvxlvmtw3x35im
 - valory/termination_abci:0.1.0:bafybeid54buqxipiuduw7b6nnliiwsxajnltseuroad53wukfonpxca2om
-- isotrop/swapping_abci:0.1.0:bafybeiavfbrbznycehckqtc2sc2niugqrm36pk77uciibwmyzwcgpv3kjm
+- isotrop/swapping_abci:0.1.0:bafybeigxir7rm3m7vhejysf47v3uszqo6r4zehxju7dnda7bwd67xnzehi
 - valory/transaction_settlement_abci:0.1.0:bafybeihq2yenstblmaadzcjousowj5kfn5l7ns5pxweq2gcrsczfyq5wzm
 behaviours:
   main:
@@ -155,8 +155,6 @@ models:
         token_e_ticker: CRV
         token_f_address: '0x8e5bBbb09Ed1ebdE8674Cda39A0c169401db4252'
         token_f_ticker: WBTC
-        token_g_address: '0xFAdc59D012Ba3c110B08A15B7755A5cb7Cbe77D7'
-        token_g_ticker: GRT
         lp_token_address: '0x01fcC189C8c8D94348f75CA0981b9C930A4F09eE'
         default_minter: '0x0000000000000000000000000000000000000000'
         ab_pool_address: '0x86A6C37D3E868580a65C723AAd7E0a945E170416'
