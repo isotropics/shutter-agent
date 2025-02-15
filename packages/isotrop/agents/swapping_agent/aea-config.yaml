@@ -26,8 +26,8 @@ protocols:
 skills:
 - valory/abstract_abci:0.1.0:bafybeihu2bcgjk2tqjiq2zhk3uogtfszqn4osvdt7ho3fubdpdj4jgdfjm
 - valory/abstract_round_abci:0.1.0:bafybeibovsktd3uxur45nrcomq5shcn46cgxd5idmhxbmjhg32c5abyqim
-- isotrop/swapping_abci:0.1.0:bafybeibb5cq2fzdg4lelfvwd2loh5ks25mtge7zbjlkssp374fkw5nniy4
-- isotrop/swapping_chained_abci:0.1.0:bafybeib425rthmxrspuoccjydpygfdwl73uwk3ssgnio55w67ew3grfome
+- isotrop/swapping_abci:0.1.0:bafybeiavfbrbznycehckqtc2sc2niugqrm36pk77uciibwmyzwcgpv3kjm
+- isotrop/swapping_chained_abci:0.1.0:bafybeicutbnbjvce7vwd5327n5weth22iqinjkfnn5mjxz6s3xmg3udnxy
 - valory/registration_abci:0.1.0:bafybeicnth5q4httefsusywx3zrrq4al47owvge72dqf2fziruicq6hqta
 - valory/reset_pause_abci:0.1.0:bafybeievjciqdvxhqxfjd4whqs27h6qbxqzrae7wwj7fpvxlvmtw3x35im
 - valory/termination_abci:0.1.0:bafybeid54buqxipiuduw7b6nnliiwsxajnltseuroad53wukfonpxca2om
@@ -181,7 +181,7 @@ models:
       uni_router_address: ${str:0x1C232F01118CB8B424793ae03F870aa7D0ac7f77}
       default_chain_id: ${str:gnosis}
       termination_from_block: ${int:34088325}
-      default_xdai_val: ${int:800}
+      min_xdai_val: ${int:5}
       rebalancing:
         chain: gnosis
         token_base_address: '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d'

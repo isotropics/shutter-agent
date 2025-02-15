@@ -159,7 +159,7 @@ class StrategyEvaluationBehaviour(SwappingBaseBehaviour):  # pylint: disable=too
                     strategy["action"] = StrategyType.SWAP_BACK.value
 
                 elif strategy["action"] == StrategyType.SWAP_BACK.value:
-                    strategy["action"] = StrategyType.ENTER.value
+                    strategy = self.get_strategy()
 
             except ValueError:
                 strategy = self.get_strategy()
@@ -280,7 +280,8 @@ class APICheckBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-many-ance
             self.context.logger.info(f"wallet balance: {wallet_balance} ")
             if token_balance > 0:
                 self.context.logger.info(f"token,wallet balance: {token_balance} {wallet_balance}")
-                strategy["token_a"]["amount_received"] = strategy["token_a"]["amount_after_swap"]
+                strategy["token_a"]["amount_received"] = token_balance #strategy["token_a"]["amount_after_swap"]
+                x = strategy["token_a"]["amount_received"]
             else:
                 is_swap_back = False
 
@@ -289,7 +290,7 @@ class APICheckBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-many-ance
         amount_in = strategy["token_a"]["amount_received"] if is_swap_back else self.params.rebalancing_params["default_max_allowance"]
 
         price_results = yield from self._get_amounts_and_prices(source_token, destination_token, amount_in)
-        self.context.logger.info(f"get_prices results {type(price_results)}, {price_results}    {debug_str}")
+        self.context.logger.info(f"get_prices results {price_results}    {debug_str}")
         prices, amounts_out = price_results
         if not amounts_out or not prices:
             return prices, amounts_out
@@ -403,7 +404,7 @@ class TxPreparationBehaviour(SwappingBaseBehaviour):  # pylint: disable=too-many
             xDAI_balance = wallet_balance / 10**18  # Convert to xDAI
             self.context.logger.info(f"xDAI Balance: {xDAI_balance}")
 
-            if xDAI_balance >= self.params.default_xdai_val:
+            if xDAI_balance >= self.params.min_xdai_val:
                 amount_to_convert = wallet_balance * 0.80
                 self.context.logger.info(f"Amount to convert: {amount_to_convert}")
                 exchange_tx = yield from self._build_exchange_tx(amount_to_convert)

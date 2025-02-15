@@ -92,6 +92,7 @@ extra:
         uni_router_address: ${str:0x1C232F01118CB8B424793ae03F870aa7D0ac7f77}
         default_chain_id: ${str:gnosis}
         termination_from_block: ${int:34088325}
+        min_xdai_val: ${int:5}
         rebalancing:
           chain: gnosis
           token_base_address: '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d'

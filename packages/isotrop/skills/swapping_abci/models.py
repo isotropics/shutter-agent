@@ -49,6 +49,6 @@ class Params(BaseParams):
         self.uni_router_address = kwargs.get("uni_router_address", None)
         self.multisend_contract_address = kwargs.get("multisend_contract_address", "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761")
         self.rebalancing_params = self._ensure("rebalancing", kwargs,dict)
-        self.default_xdai_val: int = self._ensure("default_xdai_val", kwargs, int)
+        self.min_xdai_val: int = self._ensure("min_xdai_val", kwargs, int)
 
         super().__init__(*args, **kwargs)
