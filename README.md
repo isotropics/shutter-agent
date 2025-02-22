@@ -1,6 +1,6 @@
 ## Swapping Service
 ## Overview
-  This system automates decision-making and transaction preparation for a decentralized trading and arbitrage platform. It interacts with smart contracts, evaluates strategies, and executes token swaps and approvals based on predefined conditions.
+  This system automates decision-making and transaction preparation for a decentralized trading and arbitrage platform. It interacts with smart contracts, evaluates the basic strategies, and executes token swaps and approvals based on predefined conditions.
 
 ## Main Components
  - Strategy Evaluation Behaviour: Evaluates token amounts and strategy, determining if a swap-back or      regular swap should occur.
@@ -17,7 +17,7 @@
 ## Workflow Overview
 1. Strategy Evaluation (StrategyEvaluationRound):
 
-    - This round involves evaluating a strategy, determining whether to perform a swap or swap-back based on the analysis of token amounts.
+    - This round involves evaluating a predifined basic strategy, determining whether to perform a swap or swap-back based on the analysis of token amounts.
     - Once strategy evaluation is done, it either transitions to the APICheckRound (via Event.DONE_ENTER) or ends (Event.DONE), leading to the next round.
 2. API Check (APICheckRound):
 
@@ -25,8 +25,8 @@
     - Based on the results, the system will transition to the DecisionMakingRound (Event.DONE).
 3. Decision Making (DecisionMakingRound):
 
-    - After the API check, the system evaluates whether it should perform a transaction based on predefined conditions, such as the ratio of token amounts.
-    - If conditions are met, it triggers the TRANSACT event and moves to the TxPreparationRound.
+    - After the API check, the system evaluates whether it should perform a transaction based on predefined conditions, such as the ratio of token amounts(currenlty not in use).
+    - If conditions are met, it triggers the TRANSACT event and moves to the TxPreparationRound. (Note: Currently it directly triggers the TRANSACT event and moves to the TxPreparationRound, if any one want to add any Decision then can update as per theor need)
     - If the event is DONE or ERROR, it concludes the round.
 4. Transaction Preparation (TxPreparationRound):
 
