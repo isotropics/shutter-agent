@@ -1,6 +1,6 @@
 ## Swapping Service
 ## Overview
-  This system automates decision-making and transaction preparation for a decentralized trading and arbitrage platform. It interacts with smart contracts, evaluates the basic strategies, and executes token swaps and approvals based on predefined conditions.
+  This system automates decision-making and transaction preparation for a decentralized trading and arbitrage platform. It interacts with smart contracts, evaluates the basic predefined strategies, and executes token swaps and approvals based on predefined conditions.
 
 ## Main Components
  - Strategy Evaluation Behaviour: Evaluates token amounts and strategy, determining if a swap-back or      regular swap should occur.
